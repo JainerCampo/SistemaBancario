@@ -1,5 +1,5 @@
 package Model;
 
-public class CuentaAhorros {
-    
+public class CuentaAhorros extends Cuenta {
+
 }
