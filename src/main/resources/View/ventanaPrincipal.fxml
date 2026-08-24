@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="ventanaPrincipal" minHeight="700.0" minWidth="1100.0" style="-fx-background-color: #F4F6F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VentanaPrincipalController">
+
+    <!-- ========================================================= -->
+    <!-- BARRA SUPERIOR                                            -->
+    <!-- ========================================================= -->
+
+    <top>
+
+        <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="20.0" style="-fx-background-color: white;                      -fx-border-color: #E1E5E8;                      -fx-border-width: 0 0 1 0;">
+
+            <padding>
+                <Insets left="25.0" right="25.0" />
+            </padding>
+
+            <children>
+
+                <!-- NOMBRE DEL BANCO -->
+
+                <Label text="DANIBANCA" textFill="#123B5D">
+
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+
+                </Label>
+
+
+                <!-- SEPARADOR -->
+
+                <Separator orientation="VERTICAL" prefHeight="30.0" />
+
+
+                <!-- TÍTULO DE LA VISTA -->
+
+                <Label fx:id="lblTituloVista" text="Inicio" textFill="#555555">
+
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+
+                </Label>
+
+
+                <!-- ESPACIO FLEXIBLE -->
+
+                <Region HBox.hgrow="ALWAYS" />
+
+
+                <!-- INFORMACIÓN DEL USUARIO -->
+
+                <VBox alignment="CENTER_RIGHT" spacing="2.0">
+
+                    <children>
+
+                        <Label fx:id="lblUsuario" text="Usuario" textFill="#333333">
+
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+
+                        </Label>
+
+                        <Label text="Sesión activa" textFill="#888888">
+
+                            <font>
+                                <Font size="11.0" />
+                            </font>
+
+                        </Label>
+
+                    </children>
+
+                </VBox>
+
+
+                <!-- PERFIL -->
+
+                <Button fx:id="btnPerfil" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #EAF0F4;                                -fx-background-radius: 20px;" text="U">
+
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+
+                    <tooltip>
+                        <Tooltip text="Perfil de usuario" />
+                    </tooltip>
+
+                </Button>
+
+            </children>
+
+        </HBox>
+
+    </top>
+
+
+    <!-- ========================================================= -->
+    <!-- MENÚ LATERAL                                              -->
+    <!-- ========================================================= -->
+
+    <left>
+
+        <VBox prefWidth="230.0" style="-fx-background-color: #123B5D;">
+
+            <padding>
+                <Insets bottom="20.0" left="15.0" right="15.0" top="25.0" />
+            </padding>
+
+            <children>
+
+
+                <!-- ==================== INICIO ==================== -->
+
+                <Button fx:id="btnInicio" alignment="CENTER_LEFT" maxWidth="Infinity" mnemonicParsing="false" onAction="#mostrarInicio" prefHeight="45.0" style="-fx-background-color: #1D527B;                                -fx-background-radius: 6px;" text="  Inicio" textFill="WHITE">
+
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+
+                </Button>
+
+
+                <VBox prefHeight="25.0" />
+
+
+                <!-- ==================== GESTIÓN ==================== -->
+
+                <Label text="GESTIÓN" textFill="#9EB7C9">
+
+                    <font>
+                        <Font name="System Bold" size="11.0" />
+                    </font>
+
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="10.0" />
+                    </VBox.margin>
+
+                </Label>
+
+
+                <Button fx:id="btnClientes" alignment="CENTER_LEFT" maxWidth="Infinity" mnemonicParsing="false" onAction="#mostrarClientes" prefHeight="42.0" style="-fx-background-color: transparent;                                -fx-background-radius: 6px;" text="  Clientes" textFill="#E8F0F5">
+
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+
+                </Button>
+
+
+                <Button fx:id="btnCuentas" alignment="CENTER_LEFT" maxWidth="Infinity" mnemonicParsing="false" onAction="#mostrarCuentas" prefHeight="42.0" style="-fx-background-color: transparent;                                -fx-background-radius: 6px;" text="  Cuentas" textFill="#E8F0F5">
+
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+
+                </Button>
+
+
+                <VBox prefHeight="25.0" />
+
+
+                <!-- ================= OPERACIONES ================= -->
+
+                <Label text="OPERACIONES" textFill="#9EB7C9">
+
+                    <font>
+                        <Font name="System Bold" size="11.0" />
+                    </font>
+
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="10.0" />
+                    </VBox.margin>
+
+                </Label>
+
+
+                <Button fx:id="btnTransacciones" alignment="CENTER_LEFT" maxWidth="Infinity" mnemonicParsing="false" onAction="#mostrarTransacciones" prefHeight="42.0" style="-fx-background-color: transparent;                                -fx-background-radius: 6px;" text="  Transacciones" textFill="#E8F0F5">
+
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+
+                </Button>
+
+
+                <VBox prefHeight="25.0" />
+
+
+                <!-- ================ ADMINISTRACIÓN ================ -->
+
+                <Label text="ADMINISTRACIÓN" textFill="#9EB7C9">
+
+                    <font>
+                        <Font name="System Bold" size="11.0" />
+                    </font>
+
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="10.0" />
+                    </VBox.margin>
+
+                </Label>
+
+
+                <Button fx:id="btnUsuarios" alignment="CENTER_LEFT" maxWidth="Infinity" mnemonicParsing="false" onAction="#mostrarUsuarios" prefHeight="42.0" style="-fx-background-color: transparent;                                -fx-background-radius: 6px;" text="  Usuarios" textFill="#E8F0F5">
+
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+
+                </Button>
+
+
+                <!-- ESPACIO FLEXIBLE -->
+
+                <Region VBox.vgrow="ALWAYS" />
+
+
+                <!-- ================= CERRAR SESIÓN ================ -->
+
+                <Separator />
+
+                <VBox prefHeight="12.0" />
+
+                <Button fx:id="btnCerrarSesion" alignment="CENTER_LEFT" maxWidth="Infinity" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="42.0" style="-fx-background-color: #A63D40;                                -fx-background-radius: 6px;" text="  Cerrar sesión" textFill="WHITE">
+
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+
+                </Button>
+
+            </children>
+
+        </VBox>
+
+    </left>
+
+
+    <!-- ========================================================= -->
+    <!-- ÁREA CENTRAL                                              -->
+    <!-- ========================================================= -->
+
+    <center>
+
+        <StackPane fx:id="centerContent">
+
+            <padding>
+                <Insets bottom="35.0" left="45.0" right="45.0" top="35.0" />
+            </padding>
+
+            <children>
+
+
+                <!-- ==================== INICIO ==================== -->
+
+                <VBox fx:id="panelInicio" alignment="CENTER" spacing="18.0">
+
+                    <children>
+
+
+                        <!-- TÍTULO -->
+
+                        <Label text="Bienvenido">
+
+                            <font>
+                                <Font name="System Bold" size="32.0" />
+                            </font>
+
+                        </Label>
+
+
+                        <!-- DESCRIPCIÓN -->
+
+                        <Label text="Sistema de Gestión Bancaria" textFill="#707070">
+
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+
+                        </Label>
+
+
+                        <VBox prefHeight="10.0" />
+
+
+                        <!-- MENSAJE -->
+
+                        <Label text="Seleccione un módulo del menú lateral para comenzar." textFill="#888888">
+
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+
+                        </Label>
+
+                    </children>
+
+                </VBox>
+
+            </children>
+
+        </StackPane>
+
+    </center>
+
+
+    <!-- ========================================================= -->
+    <!-- BARRA INFERIOR                                            -->
+    <!-- ========================================================= -->
+
+    <bottom>
+
+        <HBox alignment="CENTER_LEFT" prefHeight="32.0" style="-fx-background-color: white;                      -fx-border-color: #E1E5E8;                      -fx-border-width: 1 0 0 0;">
+
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+
+            <children>
+
+                <Label text="Sistema Bancario" textFill="#777777">
+
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+
+                </Label>
+
+
+                <Region HBox.hgrow="ALWAYS" />
+
+
+                <Label text="v1.0" textFill="#999999">
+
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+
+                </Label>
+
+            </children>
+
+        </HBox>
+
+    </bottom>
+
+</BorderPane>

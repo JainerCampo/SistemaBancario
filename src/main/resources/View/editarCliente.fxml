@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- Vista para editar la información permitida de un cliente. -->
+<BorderPane style="-fx-background-color: #F4F6F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditarClienteController">
+
+    <!-- Encabezado de la edición. -->
+    <top>
+        <VBox spacing="5" style="-fx-background-color: #123B5D;">
+            <padding>
+                <Insets bottom="20" left="30" right="30" top="20" />
+            </padding>
+            <Label text="Editar información" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="22" />
+                </font>
+            </Label>
+            <Label text="Modifique los datos permitidos del cliente" textFill="#D9E6F2">
+                <font>
+                    <Font size="13" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <!-- Contenido principal con margen visual de treinta píxeles. -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" style="-fx-background-color: #F4F6F8; -fx-background-insets: 0;">
+            <BorderPane.margin>
+                <Insets bottom="30" left="30" right="30" top="30" />
+            </BorderPane.margin>
+            <content>
+                <StackPane alignment="TOP_CENTER" style="-fx-background-color: #F4F6F8;">
+                    <VBox maxWidth="900" spacing="18" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #E1E5E8; -fx-border-radius: 8;">
+                        <padding>
+                            <Insets bottom="25" left="25" right="25" top="25" />
+                        </padding>
+
+                        <!-- Sección de datos que no pueden modificarse. -->
+                        <Label text="Datos no editables" textFill="#123B5D">
+                            <font>
+                                <Font name="System Bold" size="16" />
+                            </font>
+                        </Label>
+                        <GridPane hgap="20" vgap="12">
+                <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Tipo de identificación" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <Label fx:id="lblTipoIdentificacion" text="-" textFill="#1F2937"><font><Font size="14" /></font></Label>
+                </VBox>
+                <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Documento" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <Label fx:id="lblDocumento" text="-" textFill="#1F2937"><font><Font size="14" /></font></Label>
+                </VBox>
+                <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="Nombres" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <Label fx:id="lblNombres" text="-" textFill="#1F2937"><font><Font size="14" /></font></Label>
+                </VBox>
+                <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="Apellidos" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <Label fx:id="lblApellidos" text="-" textFill="#1F2937"><font><Font size="14" /></font></Label>
+                </VBox>
+                <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label text="Fecha de nacimiento" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <Label fx:id="lblFechaNacimiento" text="-" textFill="#1F2937"><font><Font size="14" /></font></Label>
+                </VBox>
+                        </GridPane>
+
+                        <Separator />
+
+                        <!-- Sección de datos de contacto que sí pueden modificarse. -->
+                        <Label text="Datos editables" textFill="#123B5D">
+                            <font>
+                                <Font name="System Bold" size="16" />
+                            </font>
+                        </Label>
+                        <GridPane hgap="20" vgap="12">
+                <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Dirección" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <TextField fx:id="txtDireccion" prefHeight="38" />
+                </VBox>
+                <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Teléfono" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <TextField fx:id="txtTelefono" prefHeight="38" />
+                </VBox>
+                <VBox spacing="5" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                    <Label text="Correo electrónico" textFill="#6B7280"><font><Font name="System Bold" size="11" /></font></Label>
+                    <TextField fx:id="txtCorreo" prefHeight="38" />
+                </VBox>
+                        </GridPane>
+
+                        <Separator />
+
+                        <!-- Acciones para guardar o descartar la edición. -->
+                        <HBox alignment="CENTER_RIGHT" spacing="12">
+                <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarCambios" prefHeight="38" prefWidth="150" style="-fx-background-color: #123B5D; -fx-background-radius: 5px;" text="Guardar cambios" textFill="WHITE">
+                    <font><Font name="System Bold" size="12" /></font>
+                </Button>
+                <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="38" prefWidth="120" style="-fx-background-color: #E5E7E9; -fx-background-radius: 5px;" text="Cancelar">
+                    <font><Font name="System Bold" size="12" /></font>
+                </Button>
+                        </HBox>
+                    </VBox>
+                </StackPane>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

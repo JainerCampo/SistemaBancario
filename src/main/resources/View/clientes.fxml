@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane style="-fx-background-color: #F4F6F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+
+    <top>
+
+        <VBox spacing="5" style="-fx-background-color: #123B5D;">
+
+            <padding>
+                <Insets bottom="20" left="30" right="30" top="20" />
+            </padding>
+
+            <Label text="Gestión de clientes" textFill="WHITE">
+
+                <font>
+                    <Font name="System Bold" size="24" />
+                </font>
+
+            </Label>
+
+            <Label text="Busque y consulte la información de un cliente" textFill="#D9E6F2">
+
+                <font>
+                    <Font size="13" />
+                </font>
+
+            </Label>
+
+        </VBox>
+
+    </top>
+
+
+    <center>
+
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #F4F6F8;">
+
+            <content>
+
+                <VBox spacing="20">
+
+            <padding>
+                <Insets bottom="25" left="30" right="30" top="25" />
+            </padding>
+
+
+            <!-- ================================================= -->
+            <!-- BUSQUEDA -->
+            <!-- ================================================= -->
+
+            <VBox spacing="10" style="-fx-background-color: white;                          -fx-background-radius: 8;                          -fx-border-color: #E1E5E8;                          -fx-border-radius: 8;">
+
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+
+                <Label text="Buscar cliente" textFill="#123B5D">
+
+                    <font>
+                        <Font name="System Bold" size="16" />
+                    </font>
+
+                </Label>
+
+
+                <HBox spacing="12">
+
+                    <VBox spacing="5" HBox.hgrow="NEVER">
+
+                        <Label text="Tipo de identificación" />
+
+                        <ComboBox fx:id="cbTipoIdentificacion" prefHeight="38" prefWidth="220" />
+                    </VBox>
+
+
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+
+                        <Label text="Número de documento" />
+
+                        <TextField fx:id="txtDocumento" prefHeight="38" promptText="Ingrese el documento" />
+                    </VBox>
+
+
+                    <VBox spacing="5">
+
+                        <Label text="" />
+
+                        <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="38" prefWidth="120" style="-fx-background-color: #123B5D;                                        -fx-background-radius: 5px;" text="Buscar" textFill="WHITE">
+
+                            <font>
+                                <Font name="System Bold" size="12" />
+                            </font>
+
+                        </Button>
+
+                    </VBox>
+
+
+                    <VBox spacing="5">
+
+                        <Label text="" />
+
+                        <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiarBusqueda" prefHeight="38" prefWidth="120" style="-fx-background-color: #E5E7E9;                                        -fx-background-radius: 5px;" text="Limpiar">
+
+                            <font>
+                                <Font name="System Bold" size="12" />
+                            </font>
+
+                        </Button>
+
+                    </VBox>
+
+                </HBox>
+
+            </VBox>
+
+
+            <!-- ================================================= -->
+            <!-- CLIENTE ENCONTRADO -->
+            <!-- ================================================= -->
+
+            <VBox fx:id="panelClienteEncontrado" spacing="18" style="-fx-background-color: white;                          -fx-background-radius: 8;                          -fx-border-color: #E1E5E8;                          -fx-border-radius: 8;">
+
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="20" />
+                </padding>
+
+
+                <Label text="Información del cliente" textFill="#123B5D">
+
+                    <font>
+                        <Font name="System Bold" size="18" />
+                    </font>
+
+                </Label>
+
+
+                <!-- ================================================= -->
+                <!-- IDENTIFICACIÓN -->
+                <!-- ================================================= -->
+
+                <HBox spacing="30" fillHeight="true">
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label text="Tipo de identificación" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblTipoIdentificacion" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label text="Número de documento" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblDocumento" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+                </HBox>
+
+
+                <!-- ================================================= -->
+                <!-- NOMBRES Y APELLIDOS -->
+                <!-- ================================================= -->
+
+                <HBox spacing="30" fillHeight="true">
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label text="Nombres" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblNombres" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label text="Apellidos" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblApellidos" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+                </HBox>
+
+
+                <!-- ================================================= -->
+                <!-- FECHA Y DIRECCIÓN -->
+                <!-- ================================================= -->
+
+                <HBox spacing="30" fillHeight="true">
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label text="Fecha de nacimiento" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblFechaNacimiento" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label prefHeight="16.0" prefWidth="107.0" text="Dirección" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblDireccion" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+                </HBox>
+
+
+                <!-- ================================================= -->
+                <!-- TELEFONO Y CORREO -->
+                <!-- ================================================= -->
+
+                <HBox spacing="30" fillHeight="true">
+
+                    <VBox prefWidth="0.0" spacing="5" HBox.hgrow="ALWAYS">
+
+                        <Label text="Teléfono" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblTelefono" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+
+                    <VBox spacing="5" prefWidth="0.0" HBox.hgrow="ALWAYS">
+
+                        <Label text="Correo electrónico" textFill="#6B7280">
+
+                            <font>
+                                <Font name="System Bold" size="11" />
+                            </font>
+
+                        </Label>
+
+                        <Label fx:id="lblCorreo" text="-" textFill="#1F2937">
+
+                            <font>
+                                <Font size="14" />
+                            </font>
+
+                        </Label>
+
+                    </VBox>
+
+                </HBox>
+
+
+                <!-- ================================================= -->
+                <!-- CUENTAS -->
+                <!-- ================================================= -->
+
+                <Label text="Cuentas del cliente" textFill="#123B5D">
+
+                    <font>
+                        <Font name="System Bold" size="16" />
+                    </font>
+
+                </Label>
+
+
+                <TableView fx:id="tablaCuentas" prefHeight="220">
+
+                    <columns>
+
+                        <TableColumn fx:id="colNumeroCuenta" prefWidth="180" text="Número de cuenta" />
+
+                        <TableColumn fx:id="colTipoCuenta" prefWidth="150" text="Tipo de cuenta" />
+
+                        <TableColumn fx:id="colEstadoCuenta" prefWidth="120" text="Estado" />
+
+                        <TableColumn fx:id="colSaldo" prefWidth="150" text="Saldo" />
+
+                    </columns>
+
+                </TableView>
+
+
+                <!-- ================================================= -->
+                <!-- ACCIONES -->
+                <!-- ================================================= -->
+
+                <HBox spacing="10">
+
+                    <Button fx:id="btnEditarCliente" mnemonicParsing="false" onAction="#editarCliente" prefHeight="38" prefWidth="150" style="-fx-background-color: #123B5D;                                    -fx-background-radius: 5px;" text="Editar información" textFill="WHITE">
+
+                        <font>
+                            <Font name="System Bold" size="12" />
+                        </font>
+
+                    </Button>
+
+
+                    <Button fx:id="btnNuevaCuenta" mnemonicParsing="false" onAction="#nuevaCuenta" prefHeight="38" prefWidth="140" style="-fx-background-color: #2E7D32;                                    -fx-background-radius: 5px;" text="Nueva cuenta" textFill="WHITE">
+
+                        <font>
+                            <Font name="System Bold" size="12" />
+                        </font>
+
+                    </Button>
+
+                </HBox>
+
+            </VBox>
+
+
+            <!-- ================================================= -->
+            <!-- CLIENTE NO ENCONTRADO -->
+            <!-- ================================================= -->
+
+            <VBox fx:id="panelClienteNoEncontrado" alignment="CENTER" spacing="15" style="-fx-background-color: white;                          -fx-background-radius: 8;                          -fx-border-color: #E1E5E8;                          -fx-border-radius: 8;">
+
+                <padding>
+                    <Insets bottom="30" left="30" right="30" top="30" />
+                </padding>
+
+
+                <Label fx:id="lblMensajeNoEncontrado" text="No se encontró el cliente." textFill="#555555">
+
+                    <font>
+                        <Font size="14" />
+                    </font>
+
+                </Label>
+
+
+                <Button fx:id="btnRegistrarCliente" mnemonicParsing="false" onAction="#registrarCliente" prefHeight="38" prefWidth="175" style="-fx-background-color: #123B5D;                                -fx-background-radius: 5px;" text="Registrar nuevo cliente" textFill="WHITE">
+
+                    <font>
+                        <Font name="System Bold" size="12" />
+                    </font>
+
+                </Button>
+
+            </VBox>
+
+                </VBox>
+
+            </content>
+
+        </ScrollPane>
+
+    </center>
+
+</BorderPane>

@@ -4,7 +4,8 @@ public enum TipoMovimiento {
     CONSIGNACION("Consignación"),
     RETIRO("Retiro"),
     TRANSFERENCIA_ENVIADA("Transferencia enviada"),
-    TRANSFERENCIA_RECIBIDA("Transferencia recibida");
+    TRANSFERENCIA_RECIBIDA("Transferencia recibida"),
+    INTERESES_GENERADOS("Intereses generados");
     
     private final String descripcion;
 

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane style="-fx-background-color: #F4F6F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CrearClienteController">
+
+    <center>
+
+        <VBox maxWidth="950.0" spacing="20.0">
+
+            <padding>
+                <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+            </padding>
+
+            <children>
+
+                <!-- ================================================= -->
+                <!-- ENCABEZADO                                      -->
+                <!-- ================================================= -->
+
+                <VBox spacing="5.0">
+
+                    <children>
+
+                        <Label text="Registrar nuevo cliente" textFill="#123B5D">
+
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+
+                        </Label>
+
+                        <Label text="Ingrese la información del nuevo cliente." textFill="#707070">
+
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+
+                        </Label>
+
+                    </children>
+
+                </VBox>
+
+
+                <!-- ================================================= -->
+                <!-- FORMULARIO                                      -->
+                <!-- ================================================= -->
+
+                <VBox spacing="20.0" style="-fx-background-color: white;                              -fx-background-radius: 8px;                              -fx-border-color: #E1E5E8;                              -fx-border-radius: 8px;">
+
+                    <padding>
+                        <Insets bottom="30.0" left="35.0" right="35.0" top="30.0" />
+                    </padding>
+
+                    <children>
+
+                        <Label text="Información personal" textFill="#123B5D">
+
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+
+                        </Label>
+
+
+                        <GridPane hgap="25.0" vgap="18.0">
+
+                            <columnConstraints>
+
+                                <ColumnConstraints percentWidth="50.0" />
+                                <ColumnConstraints percentWidth="50.0" />
+
+                            </columnConstraints>
+
+                            <children>
+
+                                <!-- ================================= -->
+                                <!-- TIPO IDENTIFICACIÓN             -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+
+                                    <children>
+
+                                        <Label text="Tipo de identificación" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <ComboBox fx:id="cbTipoIdentificacion" maxWidth="Infinity" prefHeight="40.0" promptText="Seleccione el tipo de identificación" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- DOCUMENTO                        -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+
+                                    <children>
+
+                                        <Label text="Número de identificación" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <TextField fx:id="txtDocumento" prefHeight="40.0" promptText="Ingrese el número de identificación" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- NOMBRES                          -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+
+                                    <children>
+
+                                        <Label text="Nombres" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <TextField fx:id="txtNombres" prefHeight="40.0" promptText="Ingrese los nombres" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- APELLIDOS                        -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+
+                                    <children>
+
+                                        <Label text="Apellidos" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <TextField fx:id="txtApellidos" prefHeight="40.0" promptText="Ingrese los apellidos" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- FECHA NACIMIENTO                 -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+
+                                    <children>
+
+                                        <Label text="Fecha de nacimiento" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <DatePicker fx:id="dpFechaNacimiento" maxWidth="Infinity" prefHeight="40.0" promptText="Seleccione la fecha" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- TELÉFONO                         -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+
+                                    <children>
+
+                                        <Label text="Teléfono" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <TextField fx:id="txtTelefono" prefHeight="40.0" promptText="Ingrese el número de teléfono" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- DIRECCIÓN                        -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+
+                                    <children>
+
+                                        <Label text="Dirección" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <TextField fx:id="txtDireccion" prefHeight="40.0" promptText="Ingrese la dirección" />
+
+                                    </children>
+
+                                </VBox>
+
+
+                                <!-- ================================= -->
+                                <!-- CORREO                            -->
+                                <!-- ================================= -->
+
+                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+
+                                    <children>
+
+                                        <Label text="Correo electrónico" textFill="#555555">
+
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+
+                                        </Label>
+
+                                        <TextField fx:id="txtCorreo" prefHeight="40.0" promptText="Ingrese el correo electrónico" />
+
+                                    </children>
+
+                                </VBox>
+
+                            </children>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+
+                        </GridPane>
+
+
+                        <!-- ================================================= -->
+                        <!-- BOTONES                                         -->
+                        <!-- ================================================= -->
+
+                        <HBox alignment="CENTER_RIGHT" spacing="12.0">
+
+                            <children>
+
+                                <Region HBox.hgrow="ALWAYS" />
+
+
+                                <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: white;                                                -fx-border-color: #C9D0D6;                                                -fx-border-radius: 5px;                                                -fx-background-radius: 5px;" text="Cancelar" textFill="#555555">
+
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+
+                                </Button>
+
+
+                                <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#registrarCliente" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #123B5D;                                                -fx-background-radius: 5px;" text="Registrar cliente" textFill="WHITE">
+
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+
+                                </Button>
+
+                            </children>
+
+                        </HBox>
+
+                    </children>
+
+                </VBox>
+
+            </children>
+
+        </VBox>
+
+    </center>
+
+</BorderPane>
