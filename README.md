@@ -1,178 +1,310 @@
-# 🏦 DaniBanca — Sistema de Gestión Bancaria (EN DESARROLLO)
+# 🏦 Sistema Bancario — Java, JDBC & DAO
 
-> Modelo de dominio bancario construido con Java 17, JavaFX y principios de diseño orientado a objetos. Proyecto académico/profesional con arquitectura limpia, thread-safe y preparado para escalar.
+Sistema bancario desarrollado en **Java**, orientado al diseño de software, modelado de dominio y persistencia de datos. El proyecto comenzó como una aplicación completamente **en memoria** y evolucionó hacia una arquitectura con **base de datos, JDBC y patrón DAO**.
 
----
-
-## 📋 Tabla de contenidos
-
-- [Descripción](#-descripción)
-- [Características principales](#-características-principales)
-- [Arquitectura y diseño](#-arquitectura-y-diseño)
-- [Stack tecnológico](#-stack-tecnológico)
-- [Estructura del proyecto](#-estructura-del-proyecto)
-- [Cómo ejecutar](#-cómo-ejecutar)
-- [Uso de IA en el desarrollo](#-uso-de-ia-en-el-desarrollo)
-- [Autor](#-autor)
-- [Licencia](#-licencia)
+El objetivo principal del proyecto no es únicamente implementar funcionalidades bancarias, sino demostrar el proceso de **diseñar, evolucionar y mantener un sistema de software**, tomando decisiones arquitectónicas y utilizando herramientas de Inteligencia Artificial como apoyo durante el desarrollo.
 
 ---
 
-## 📝 Descripción
+## 🎯 Objetivo del proyecto
 
-**DaniBanca** es un sistema de gestión bancaria desarrollado en Java que permite administrar clientes, cuentas de ahorro, cuentas corrientes y movimientos financieros. El proyecto pone énfasis en un **modelo de dominio robusto** con validaciones estrictas, manejo de concurrencia y una interfaz gráfica construida con JavaFX.
+Construir un sistema bancario que permita gestionar clientes, cuentas y movimientos financieros, aplicando principios de **Programación Orientada a Objetos, diseño de dominio, persistencia y separación de responsabilidades**.
 
-El núcleo del sistema está diseñado con **Programación Orientada a Objetos avanzada**: herencia, polimorfismo, encapsulamiento, inmutabilidad y excepciones de dominio personalizadas.
-
----
-
-## ✨ Características principales
-
-| Módulo | Descripción |
-|--------|-------------|
-| 👤 **Gestión de clientes** | Registro, búsqueda y edición de clientes con validación de documento, nombres, correo, teléfono y dirección. |
-| 💳 **Cuentas bancarias** | Creación de cuentas de ahorro (con intereses) y cuentas corrientes (con límite de sobregiro). |
-| 💰 **Operaciones financieras** | Consignaciones, retiros, transferencias entre cuentas y aplicación de intereses. |
-| 📜 **Movimientos** | Registro inmutable de cada transacción con fecha, hora, canal y trazabilidad de cuentas origen/destino. |
-| 🔒 **Thread-safety** | Sincronización en operaciones de saldo, generación atómica de IDs y prevención de deadlock en transferencias. |
-| ⚠️ **Excepciones de dominio** | `SaldoInsuficienteException`, `CuentaInactivaException`, `ClienteDuplicadoException`, etc. |
-| 🖥️ **Interfaz gráfica** | JavaFX con navegación por vistas (FXML), sidebar, header dinámico y paneles de resultados. |
+El proyecto busca representar un escenario cercano al desarrollo de una aplicación empresarial, evitando reducir el sistema a un CRUD básico.
 
 ---
 
-## 🏗️ Arquitectura y diseño
+## 🏗️ Evolución del proyecto
 
-### Principios aplicados
+El desarrollo se realizó de forma incremental:
 
-- **Responsabilidad única (SRP):** cada clase tiene un propósito claro (`Cliente`, `Cuenta`, `Movimiento`, `Banco`).
-- **Inmutabilidad:** `Movimiento` es inmutable (`final` en todos sus campos) con *factory methods* estáticos.
-- **Polimorfismo:** `Cuenta` es abstracta; `validarRetiro()` se comporta diferente en `CuentaAhorros` vs `CuentaCorriente`.
-- **Encapsulamiento:** getters defensivos, campos privados, métodos protegidos para modificación interna.
-- **Inyección de dependencias:** el mismo objeto `Banco` se comparte entre controllers mediante la interfaz `BancoAware`.
+### 1. Modelo de dominio
 
----
+Inicialmente, el sistema funcionaba completamente en memoria.
 
-## 🛠️ Stack tecnológico
+Se construyó un modelo orientado al dominio utilizando:
 
-| Tecnología | Versión | Uso |
-|------------|---------|-----|
-| Java | 17 | Lenguaje principal |
-| JavaFX | 21+ | Interfaz gráfica y navegación |
-| FXML | — | Declaración de vistas |
-| Maven / Gradle | — | Gestión de dependencias *(recomendado)* |
+* Encapsulamiento
+* Herencia
+* Polimorfismo
+* Abstracción
+* Inmutabilidad
+* Validaciones de dominio
+* Excepciones personalizadas
+* Enumeraciones (`enum`)
+* Identificadores generados de forma segura
+* Control de concurrencia en operaciones críticas
 
-> **Nota:** el proyecto no utiliza frameworks externos (Spring, Lombok, Hibernate) para mantener el enfoque en el dominio y la lógica de negocio pura.
+Entre las entidades principales se encuentran:
 
----
+```text
+Persona
+ └── Cliente
 
-## 📁 Estructura del proyecto
+Cuenta
+ ├── CuentaAhorros
+ └── CuentaCorriente
 
-```
-src/
-├── Model/
-│   ├── Persona.java
-│   ├── Cliente.java
-│   ├── Cuenta.java
-│   ├── CuentaAhorros.java
-│   ├── CuentaCorriente.java
-│   ├── Movimiento.java
-│   ├── Banco.java
-│   ├── Direccion.java
-│   ├── TipoIdentificacion.java
-│   ├── EstadoCuenta.java
-│   ├── TipoMovimiento.java
-│   ├── CanalMovimiento.java
-│   └── Exceptions/
-│       ├── DominioException.java
-│       ├── ClienteDuplicadoException.java
-│       ├── CuentaDuplicadaException.java
-│       ├── CuentaInactivaException.java
-│       └── SaldoInsuficienteException.java
-│
-├── Controller/
-│   ├── BancoAware.java
-│   ├── VentanaPrincipalController.java
-│   ├── ClientesController.java
-│   ├── EditarClienteController.java
-│   └── CrearClienteController.java
-│
-└── View/
-    ├── VentanaPrincipal.fxml
-    ├── clientes.fxml
-    ├── editarCliente.fxml
-    └── crearCliente.fxml
+Movimiento
 ```
 
----
-
-## 🚀 Cómo ejecutar
-
-### Requisitos previos
-
-- [JDK 17](https://adoptium.net/) o superior instalado.
-- JavaFX SDK configurado en tu IDE (IntelliJ IDEA, Eclipse, VS Code).
-
-### Pasos
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/JainerCampo/SistemaBancario.git
-   cd danibanca
-   ```
-
-2. Abre el proyecto en tu IDE favorito.
-
-3. Configura el *module path* de JavaFX si es necesario:
-   ```bash
-   --module-path /ruta/a/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml
-   ```
-
-4. Ejecuta la clase principal `Main.java` (o el launcher de tu aplicación JavaFX).
+El comportamiento de las cuentas se define mediante polimorfismo. Por ejemplo, las reglas de retiro pueden variar dependiendo del tipo de cuenta.
 
 ---
 
-## 🤖 Uso de IA en el desarrollo
+### 2. Interfaz gráfica
 
-Este proyecto fue desarrollado con un enfoque híbrido: **arquitectura humana + aceleración con IA**.
+Se incorporó una interfaz utilizando **JavaFX**, permitiendo interactuar con el modelo de dominio mediante una aplicación de escritorio.
 
-- **Diseño de arquitectura:** herencia, enums, reglas de negocio, flujo de navegación y decisiones de concurrencia fueron definidos manualmente.
-- **GitHub Copilot** (modelo GPT-4o) dentro de VS Code se utilizó como *pair programmer* técnico mediante **prompts estructurados** para generar refactorizaciones, sincronización de hilos, excepciones personalizadas y vistas FXML.
-- **Revisión humana:** cada salida de la IA fue depurada, validada y ajustada antes de integrarla. La coherencia del modelo y las reglas de negocio siguen siendo 100% humanas.
-
-> La IA acelera iteraciones; el criterio técnico y el dominio son responsabilidad del desarrollador.
+La interfaz se mantiene separada de las reglas de negocio para evitar acoplar el dominio con la capa de presentación.
 
 ---
 
-## 👤 Autor
+### 3. Persistencia con JDBC y DAO
 
-**[JAINER CAMPO]**
-- 💼 [LinkedIn](https://www.linkedin.com/in/jainer-campo/)
-- 🐙 [GitHub](https://github.com/JainerCampo/)
+Posteriormente, el sistema evolucionó desde una arquitectura basada completamente en memoria hacia una arquitectura con **persistencia real**.
 
----
+Se incorporó:
 
-## 📄 Licencia
+* Base de datos relacional
+* JDBC
+* Patrón DAO (Data Access Object)
+* Consultas SQL parametrizadas
+* Separación entre lógica de negocio y acceso a datos
+* Mapeo entre objetos Java y registros de la base de datos
 
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+La arquitectura general puede representarse así:
 
+```text
+┌─────────────────────────┐
+│       JavaFX / UI       │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│     Capa de aplicación  │
+│      / servicios        │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│     Modelo de dominio   │
+│                         │
+│ Cliente                 │
+│ Cuenta                  │
+│ Movimiento              │
+│ Enums                   │
+│ Excepciones de dominio  │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│          DAO            │
+│                         │
+│ ClienteDAO              │
+│ CuentaDAO               │
+│ MovimientoDAO           │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│          JDBC           │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│      Base de datos      │
+└─────────────────────────┘
 ```
-MIT License
 
-Copyright (c) 2026 [JAINER CAMPO]
+Una de las decisiones importantes es mantener el **modelo de dominio independiente de JDBC**.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+El dominio representa las reglas del negocio, mientras que DAO/JDBC se encarga de la persistencia.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+---
+
+## 🗄️ Base de datos
+
+La incorporación de la base de datos permite que la información deje de depender exclusivamente de la memoria de la aplicación.
+
+Los datos principales relacionados con el sistema incluyen:
+
+* Clientes
+* Cuentas
+* Tipos de cuenta
+* Movimientos
+* Relaciones entre entidades
+
+El DAO funciona como una capa de abstracción entre el dominio y la base de datos.
+
+Por ejemplo:
+
+```text
+Objeto Java
+     │
+     ▼
+ Cuenta
+     │
+     ▼
+ CuentaDAO
+     │
+     ▼
+   JDBC
+     │
+     ▼
+ Base de datos
+```
+
+Esto permite que la lógica de negocio no tenga que conocer directamente los detalles de SQL o JDBC.
+
+---
+
+## 🤖 Uso de Inteligencia Artificial
+
+La Inteligencia Artificial fue utilizada como **herramienta de apoyo durante el proceso de desarrollo**, no como sustituto de las decisiones de diseño.
+
+La IA se utilizó principalmente para:
+
+* Analizar alternativas de arquitectura.
+* Revisar decisiones de diseño.
+* Detectar posibles problemas de acoplamiento.
+* Generar ideas para refactorizaciones.
+* Analizar errores y excepciones.
+* Apoyar la implementación de JDBC y DAO.
+* Revisar consultas SQL.
+* Proponer estructuras de persistencia.
+* Documentar componentes del sistema.
+* Explorar buenas prácticas de desarrollo.
+* Acelerar tareas repetitivas.
+
+La implementación y las decisiones finales fueron revisadas y comprendidas durante el proceso de desarrollo.
+
+### 🧠 IA como herramienta, no como arquitecto
+
+El proyecto utiliza una filosofía de desarrollo en la que la IA funciona como **copiloto técnico**.
+
+La responsabilidad sobre decisiones como:
+
+* qué arquitectura utilizar,
+* dónde colocar cada responsabilidad,
+* qué entidades pertenecen al dominio,
+* cómo separar las capas,
+* cómo modelar la persistencia,
+* qué reglas deben protegerse,
+
+permanece en el desarrollador.
+
+La IA puede proponer una solución, pero el desarrollador debe ser capaz de **evaluarla, modificarla, rechazarla o justificarla**.
+
+---
+
+## 👨‍💻 Rol del desarrollador
+
+En este proyecto el objetivo no es únicamente demostrar que puedo escribir código Java.
+
+El enfoque está en desarrollar la capacidad de **pensar como desarrollador y arquitecto de software**.
+
+Las principales responsabilidades durante el proyecto han sido:
+
+* Analizar el problema.
+* Diseñar el modelo de dominio.
+* Definir responsabilidades.
+* Elegir patrones de diseño.
+* Diseñar la interacción entre capas.
+* Diseñar la persistencia.
+* Evaluar decisiones técnicas.
+* Refactorizar cuando la arquitectura lo requiere.
+* Utilizar IA para aumentar la productividad.
+* Validar técnicamente las soluciones propuestas por IA.
+
+La intención es evolucionar desde:
+
+```text
+"¿Cómo escribo este código?"
+```
+
+hacia:
+
+```text
+"¿Dónde debe vivir esta responsabilidad
+y por qué?"
 ```
 
 ---
 
-<p align="center">
-  <strong>⭐ Si te sirvió o te gustó el proyecto, déjale una estrella.</strong>
-</p>
+## 🛠️ Tecnologías
+
+* **Java**
+* **JavaFX**
+* **JDBC**
+* **SQL**
+* **Base de datos relacional**
+* **DAO Pattern**
+* **Programación Orientada a Objetos**
+* **Git / GitHub**
+* **Inteligencia Artificial como herramienta de desarrollo**
+
+---
+
+## 📚 Conceptos aplicados
+
+### Programación
+
+* POO
+* Herencia
+* Polimorfismo
+* Abstracción
+* Encapsulamiento
+* Inmutabilidad
+* Excepciones personalizadas
+* `enum`
+* Concurrencia
+
+### Arquitectura y diseño
+
+* Separación de responsabilidades
+* Separación por capas
+* Modelo de dominio
+* DAO
+* Abstracción de persistencia
+* Bajo acoplamiento
+* Alta cohesión
+* Evolución incremental de arquitectura
+
+### Persistencia
+
+* SQL
+* JDBC
+* `PreparedStatement`
+* `ResultSet`
+* Mapeo objeto-relacional manual
+* CRUD mediante DAO
+* Relaciones entre entidades
+
+---
+
+## 🚀 Próximos pasos
+
+Algunas de las posibles evoluciones del proyecto son:
+
+* Implementar transacciones JDBC.
+* Mejorar el manejo de errores de persistencia.
+* Implementar un Service Layer más definido.
+* Incorporar pruebas unitarias.
+* Incorporar pruebas de integración.
+* Mejorar la gestión de configuración.
+* Implementar logging.
+* Gestionar migraciones de base de datos.
+* Evolucionar hacia una API REST.
+* Separar completamente frontend y backend.
+* Explorar Spring Boot y Spring Data/JPA.
+* Containerizar la aplicación.
+* Implementar autenticación y autorización.
+
+---
+
+## 📌 Propósito
+
+Este proyecto forma parte de mi proceso de formación y evolución como **desarrollador backend**, con especial interés en **Java, bases de datos, arquitectura de software y diseño de sistemas**.
+
+Más que construir una aplicación que simplemente funcione, el objetivo es aprender a construir sistemas que puedan **evolucionar, mantenerse y escalar sin perder claridad arquitectónica**.
