@@ -16,6 +16,15 @@ public class CuentaAhorros extends Cuenta {
         this.fechaUltimoInteres = getFechaApertura();
     }
 
+    public CuentaAhorros(Cliente titular, String numeroCuenta, double saldo, EstadoCuenta estado,
+            java.time.LocalDate fechaApertura, double tasaInteres) throws DominioException {
+        super(titular, numeroCuenta, saldo, estado, fechaApertura);
+        if (!Double.isFinite(tasaInteres) || tasaInteres < 0)
+            throw new DominioException("La tasa de interés no puede ser negativa.");
+        this.tasaInteres = tasaInteres;
+        this.fechaUltimoInteres = fechaApertura;
+    }
+
     public double getTasaInteres() {
         return tasaInteres;
     }
@@ -38,7 +47,7 @@ public class CuentaAhorros extends Cuenta {
         double interes = getSaldo() * (tasaInteres / 100) * dias / 365.0;
         if (interes > 0) {
             aumentarSaldo(interes);
-            agregarMovimiento(Movimiento.crearInteresesGenerados(interes, "Intereses generados por " + dias + " días"));
+            persistirMovimiento(Movimiento.crearInteresesGenerados(interes, "Intereses generados por " + dias + " días"));
         }
         fechaUltimoInteres = LocalDate.now();
     }
@@ -50,6 +59,6 @@ public class CuentaAhorros extends Cuenta {
             throw new DominioException("No se pueden aplicar intereses con saldo igual a cero.");
         double interes = getSaldo() * tasa;
         aumentarSaldo(interes);
-        agregarMovimiento(Movimiento.crearInteresesGenerados(interes, "Intereses generados"));
+        persistirMovimiento(Movimiento.crearInteresesGenerados(interes, "Intereses generados"));
     }
 }

@@ -14,6 +14,14 @@ public class CuentaCorriente extends Cuenta {
         this.limiteSobregiro = limiteSobregiro;
     }
 
+    public CuentaCorriente(Cliente titular, String numeroCuenta, double saldo, EstadoCuenta estado,
+            java.time.LocalDate fechaApertura, double limiteSobregiro) throws DominioException {
+        super(titular, numeroCuenta, saldo, estado, fechaApertura);
+        if (!Double.isFinite(limiteSobregiro) || limiteSobregiro <= 0)
+            throw new DominioException("El límite de sobregiro debe ser mayor que cero.");
+        this.limiteSobregiro = limiteSobregiro;
+    }
+
     public double getLimiteSobregiro() {
         return limiteSobregiro;
     }

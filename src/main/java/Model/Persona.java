@@ -1,12 +1,10 @@
 package Model;
 
 import java.time.LocalDate;
-import java.util.concurrent.atomic.AtomicInteger;
 import Model.Exceptions.DominioException;
 
 public abstract class Persona {
-    private static final AtomicInteger contador = new AtomicInteger(1);
-    private final int id;
+    private int id;
     private final TipoIdentificacion tipoIdentificacion;
     private final String documento;
     private final String nombres;
@@ -31,7 +29,7 @@ public abstract class Persona {
             throw new DominioException("La dirección es obligatoria.");
         validarTelefono(telefono);
         validarCorreo(correo);
-        this.id = contador.getAndIncrement();
+        this.id = 0;
         this.tipoIdentificacion = tipoIdentificacion;
         this.documento = documento.trim();
         this.nombres = nombres.trim();
@@ -50,6 +48,12 @@ public abstract class Persona {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        if (id <= 0)
+            throw new IllegalArgumentException("El ID debe ser positivo.");
+        this.id = id;
     }
 
     public TipoIdentificacion getTipoIdentificacion() {

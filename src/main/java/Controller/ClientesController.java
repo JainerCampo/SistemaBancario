@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -31,6 +33,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * Controlador de la vista de gestión y búsqueda de clientes.
@@ -233,6 +238,7 @@ public class ClientesController implements Initializable, BancoAware {
         panelClienteEncontrado.setManaged(false);
         panelClienteNoEncontrado.setVisible(false);
         panelClienteNoEncontrado.setManaged(false);
+        btnNuevaCuenta.setDisable(true);
     }
 
     /** Recibe la instancia compartida del banco desde la ventana principal. */
@@ -294,6 +300,7 @@ public class ClientesController implements Initializable, BancoAware {
         panelClienteNoEncontrado.setManaged(false);
         panelClienteEncontrado.setVisible(true);
         panelClienteEncontrado.setManaged(true);
+        btnNuevaCuenta.setDisable(false);
         lblTipoIdentificacion.setText(cliente.getTipoIdentificacion().getDescripcion());
         lblDocumento.setText(cliente.getDocumento());
         lblNombres.setText(cliente.getNombres());
@@ -352,7 +359,7 @@ public class ClientesController implements Initializable, BancoAware {
         String documentoBuscado = txtDocumento.getText();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/crearCliente.fxml"));
-            Node vista = loader.load();
+            Parent vista = loader.load();
             CrearClienteController controller = loader.getController();
             controller.setBanco(banco);
             controller.setTipoIdentificacion(tipoSeleccionado);
@@ -389,18 +396,41 @@ public class ClientesController implements Initializable, BancoAware {
         }
     }
 
-    /**
-     * El formulario crearCuenta.fxml aún no existe. Cuando esté disponible,
-     * se cargará aquí con banco, ventanaPrincipal y clienteActual; al regresar
-     * deberá llamarse cargarCuentas(clienteActual) para refrescar la tabla.
-     */
+    /** Crea una cuenta únicamente desde el contexto de un cliente encontrado. */
     @FXML
     private void nuevaCuenta() {
-        if (clienteActual == null) {
-            mostrarError("Primero debe buscar un cliente.");
+        if (clienteActual == null || banco == null || ventanaPrincipal == null) {
+            mostrarError("Primero debe buscar y seleccionar un cliente.");
             return;
         }
-        mostrarInformacion("La funcionalidad para crear cuentas estará disponible próximamente.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/nuevaCuenta.fxml"));
+            Parent vista = loader.load();
+            NuevaCuentaController controller = loader.getController();
+            Stage ventana = new Stage();
+            ventana.setTitle("Crear nueva cuenta");
+            Window propietario = ventanaPrincipal.getScene() == null
+                    ? null
+                    : ventanaPrincipal.getScene().getWindow();
+            if (propietario != null) {
+                ventana.initOwner(propietario);
+            }
+            ventana.initModality(Modality.APPLICATION_MODAL);
+            ventana.setResizable(false);
+            ventana.setScene(new Scene(vista));
+            ventana.sizeToScene();
+            ventana.centerOnScreen();
+            controller.setBanco(banco);
+            controller.setVentanaPrincipal(ventanaPrincipal);
+            controller.setCliente(clienteActual);
+            controller.setVentanaEmergente(ventana);
+            ventana.showAndWait();
+            cargarCuentas(clienteActual);
+        } catch (IOException | RuntimeException e) {
+            e.printStackTrace();
+            mostrarError("No se pudo abrir la vista para crear la cuenta: "
+                    + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage()));
+        }
     }
 
     /** Muestra los datos principales de una cuenta seleccionada con doble clic. */
@@ -429,11 +459,6 @@ public class ClientesController implements Initializable, BancoAware {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
-    }
-
-    /** Presenta información no bloqueante de forma uniforme. */
-    private void mostrarInformacion(String mensaje) {
-        mostrarInformacion("Información", mensaje);
     }
 
     /** Conserva la firma anterior para mensajes informativos con título. */

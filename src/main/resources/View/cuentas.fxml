@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="Controller.CuentasController" style="-fx-background-color:#F4F6F8;">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-background-color:#123B5D;">
+            <padding>
+                <Insets bottom="20" left="30" right="30" top="20" />
+            </padding>
+            <Label text="Gestión de cuentas" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24" />
+                </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <content>
+                <VBox spacing="16">
+                    <padding>
+                        <Insets bottom="30" left="30" right="30" top="24" />
+                    </padding>
+                    <VBox spacing="12"
+                        style="-fx-background-color:white;-fx-border-color:#D1D5DB;-fx-border-radius:8;-fx-background-radius:8;">
+                        <fx:define>
+                            <ToggleGroup fx:id="tgModoBusqueda" />
+                            <ToggleGroup fx:id="tgFiltroEstado" />
+                        </fx:define>
+                        <padding>
+                            <Insets bottom="16" left="16" right="16" top="16" />
+                        </padding>
+                        <Label text="Buscar cuentas" textFill="#123B5D"
+                            style="-fx-font-size:16px;-fx-font-weight:bold;" />
+                        <HBox spacing="8" style="-fx-background-color:#F4F6F8;-fx-background-radius:6;-fx-padding:4;">
+                            <ToggleButton fx:id="tbPorNumero" text="Por N° de cuenta"
+                                selected="true"
+                                prefHeight="44" minWidth="150"
+                                style="-fx-background-color:#123B5D;-fx-text-fill:white;" />
+                            <ToggleButton fx:id="tbPorCliente" text="Por cliente"
+                                prefHeight="44" minWidth="120"
+                                style="-fx-background-color:transparent;-fx-text-fill:#333;" />
+                        </HBox>
+                        <HBox fx:id="formPorNumero" spacing="12" alignment="BOTTOM_LEFT">
+                            <VBox spacing="4">
+                                <Label text="Número de cuenta" textFill="#374151" />
+                                <TextField fx:id="txtNumeroCuenta" prefWidth="280" prefHeight="44"
+                                    promptText="Ej: 1000000001" accessibleText="Número de cuenta" />
+                            </VBox>
+                            <Button text="Buscar" onAction="#buscarCuenta" prefHeight="44"
+                                minWidth="110"
+                                style="-fx-background-color:#123B5D;-fx-text-fill:white;-fx-font-weight:bold;" />
+                        </HBox>
+                        <HBox fx:id="formPorCliente" spacing="12" alignment="CENTER_LEFT"
+                            visible="false" managed="false">
+                            <VBox spacing="4">
+                                <Label text="Tipo de identificación" textFill="#374151" />
+                                <ComboBox fx:id="cbTipoIdentificacion" prefWidth="200" prefHeight="44" />
+                            </VBox>
+                            <VBox spacing="4">
+                                <Label text="Documento" textFill="#374151" />
+                                <TextField fx:id="txtDocumento" prefWidth="200" prefHeight="44"
+                                    promptText="Ej: 12345678" accessibleText="Documento del cliente" />
+                            </VBox>
+                            <Button text="Buscar" onAction="#buscarCuenta" prefHeight="44"
+                                minWidth="110"
+                                style="-fx-background-color:#123B5D;-fx-text-fill:white;-fx-font-weight:bold;" />
+                        </HBox>
+                    </VBox>
+                    <HBox spacing="14" alignment="CENTER_LEFT"
+                        style="-fx-background-color:white;-fx-border-color:#D1D5DB;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 16 12 16;">
+                        <Label text="Mostrar:" textFill="#123B5D"
+                            style="-fx-font-weight:bold;" />
+                        <RadioButton fx:id="rbTodas" text="Todas" selected="true" />
+                        <RadioButton fx:id="rbActivas" text="Activas" />
+                        <RadioButton fx:id="rbBloqueadas" text="Bloqueadas" />
+                        <RadioButton fx:id="rbSuspendidas" text="Suspendidas" />
+                        <RadioButton fx:id="rbCanceladas" text="Canceladas" />
+                    </HBox>
+                    <TableView fx:id="tablaCuentas" prefHeight="280">
+                        <columns>
+                            <TableColumn fx:id="colNumeroCuenta" text="N° Cuenta" />
+                            <TableColumn fx:id="colTitular" text="Titular" />
+                            <TableColumn fx:id="colTipo" text="Tipo" />
+                            <TableColumn fx:id="colEstado" text="Estado" />
+                            <TableColumn fx:id="colSaldo" text="Saldo" />
+                            <TableColumn fx:id="colFechaApertura" text="Fecha apertura" />
+                        </columns>
+                    </TableView>
+                    <VBox fx:id="panelDetalle" spacing="12"
+                        style="-fx-background-color:white;-fx-border-color:#D1D5DB;">
+                        <padding>
+                            <Insets bottom="16" left="16" right="16" top="16" />
+                        </padding>
+                        <Label text="Detalle de cuenta" textFill="#123B5D" />
+                        <VBox spacing="12">
+                            <GridPane hgap="14" vgap="8">
+                                <Label text="N° cuenta" />
+                                <Label fx:id="lblNumeroDetalle" GridPane.columnIndex="1" />
+                                <Label text="Titular" GridPane.rowIndex="1" />
+                                <Label fx:id="lblTitularDetalle" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="1" />
+                                <Label text="Documento" GridPane.rowIndex="2" />
+                                <Label fx:id="lblDocumentoDetalle" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="2" />
+                                <Label text="Tipo" GridPane.rowIndex="3" />
+                                <Label fx:id="lblTipoDetalle" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="3" />
+                                <Label text="Estado" GridPane.rowIndex="4" />
+                                <Label fx:id="lblEstadoDetalle" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="4" />
+                                <Label text="Saldo" GridPane.rowIndex="5" />
+                                <Label fx:id="lblSaldoDetalle" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="5" />
+                                <Label text="Fecha apertura" GridPane.rowIndex="6" />
+                                <Label fx:id="lblFechaDetalle" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="6" />
+                                <Label fx:id="lblParametroDetalle" GridPane.rowIndex="7" />
+                                <Label fx:id="lblValorParametro" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="7" />
+                            </GridPane>
+                            <VBox spacing="8">
+                                <Label text="Últimos 10 movimientos" />
+                                <TableView fx:id="tablaMovimientos" prefHeight="210" maxWidth="Infinity"
+                                    VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="colFechaMovimiento" text="Fecha" />
+                                        <TableColumn fx:id="colTipoMovimiento" text="Tipo" />
+                                        <TableColumn fx:id="colMontoMovimiento" text="Monto" />
+                                        <TableColumn fx:id="colCanalMovimiento" text="Canal" />
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </VBox>
+                        <HBox spacing="8">
+                            <Button text="Ver extracto completo" onAction="#verExtracto"
+                                prefHeight="44" />
+                            <Button text="Cambiar estado" onAction="#cambiarEstado" prefHeight="44" />
+                            <Button fx:id="btnAplicarIntereses" text="Aplicar intereses"
+                                onAction="#aplicarIntereses" prefHeight="44" disable="true" />
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

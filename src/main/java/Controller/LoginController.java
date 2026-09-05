@@ -18,325 +18,259 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    // =========================================================
-    // MODELO
-    // =========================================================
+        // =========================================================
+        // MODELO
+        // =========================================================
 
-    private Banco banco;
+        private Banco banco;
 
+        // =========================================================
+        // CAMPOS DEL LOGIN
+        // =========================================================
 
-    // =========================================================
-    // CAMPOS DEL LOGIN
-    // =========================================================
+        @FXML
+        private TextField txtUserSignIn;
 
-    @FXML
-    private TextField txtUserSignIn;
+        @FXML
+        private PasswordField txtPasswordSignIn;
 
-    @FXML
-    private PasswordField txtPasswordSignIn;
+        @FXML
+        private TextField txtPasswordSignInMask;
 
-    @FXML
-    private TextField txtPasswordSignInMask;
+        @FXML
+        private CheckBox checkViewPassSignIn;
 
-    @FXML
-    private CheckBox checkViewPassSignIn;
+        @FXML
+        private Button btnClean;
 
-    @FXML
-    private Button btnClean;
+        // =========================================================
+        // INICIALIZACIÓN
+        // =========================================================
 
+        @FXML
+        private void initialize() {
 
-    // =========================================================
-    // INICIALIZACIÓN
-    // =========================================================
-
-    @FXML
-    private void initialize() {
-
-        checkViewPassSignIn.setOnAction(
-                this::actionEvent
-        );
-    }
-
-
-    // =========================================================
-    // RECIBIR BANCO
-    // =========================================================
-
-    public void setBanco(Banco banco) {
-
-        this.banco = banco;
-    }
-
-
-    // =========================================================
-    // EVENTOS
-    // =========================================================
-
-    @FXML
-    private void actionEvent(ActionEvent event) {
-
-        if (event.getSource() == btnClean) {
-
-            limpiar();
-
-        } else if (
-                event.getSource() == checkViewPassSignIn
-        ) {
-
-            alternarVisibilidadPassword();
-
-        } else {
-
-            ingresar();
+                checkViewPassSignIn.setOnAction(
+                                this::actionEvent);
         }
-    }
 
+        // =========================================================
+        // RECIBIR BANCO
+        // =========================================================
 
-    // =========================================================
-    // ENTER
-    // =========================================================
+        public void setBanco(Banco banco) {
 
-    @FXML
-    private void eventKey(KeyEvent event) {
-
-        if ("\r".equals(event.getCharacter())) {
-
-            ingresar();
+                this.banco = banco;
         }
-    }
 
+        // =========================================================
+        // EVENTOS
+        // =========================================================
 
-    // =========================================================
-    // INICIAR SESIÓN
-    // =========================================================
+        @FXML
+        private void actionEvent(ActionEvent event) {
 
-    private void ingresar() {
+                if (event.getSource() == btnClean) {
 
-        String usuario =
-                txtUserSignIn.getText();
+                        limpiar();
 
-        String password =
-                obtenerPassword();
+                } else if (event.getSource() == checkViewPassSignIn) {
 
+                        alternarVisibilidadPassword();
 
-        if (
-                usuario.equals("admin")
-                && password.equals("1234")
-        ) {
+                } else {
 
-            try {
-
-                /*
-                 * Cargar ventana principal.
-                 */
-
-                FXMLLoader loader =
-                        new FXMLLoader(
-                                getClass().getResource(
-                                        "/View/ventanaPrincipal.fxml"
-                                )
-                        );
-
-
-                Parent root =
-                        loader.load();
-
-
-                /*
-                 * Obtener el controller de
-                 * ventanaPrincipal.fxml.
-                 */
-
-                VentanaPrincipalController controller =
-                        loader.getController();
-
-
-                /*
-                 * MUY IMPORTANTE:
-                 *
-                 * Le entregamos el mismo Banco
-                 * que fue creado en App.
-                 */
-
-                controller.setBanco(banco);
-
-
-                /*
-                 * Crear ventana principal.
-                 */
-
-                Stage ventanaPrincipal =
-                        new Stage();
-
-
-                ventanaPrincipal.setTitle(
-                        "DaniBanca"
-                );
-
-
-                ventanaPrincipal.setScene(
-                        new Scene(root)
-                );
-
-
-                ventanaPrincipal.setWidth(
-                        1200
-                );
-
-
-                ventanaPrincipal.setHeight(
-                        700
-                );
-
-
-                ventanaPrincipal.setMinWidth(
-                        1000
-                );
-
-
-                ventanaPrincipal.setMinHeight(
-                        600
-                );
-
-
-                ventanaPrincipal.show();
-
-
-                /*
-                 * Cerrar ventana de Login.
-                 */
-
-                Stage ventanaLogin =
-                        (Stage) txtUserSignIn
-                                .getScene()
-                                .getWindow();
-
-
-                ventanaLogin.close();
-
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-
-
-        } else {
-
-            mostrarError(
-                    "Usuario o contraseña incorrectos"
-            );
+                        ingresar();
+                }
         }
-    }
 
+        // =========================================================
+        // ENTER
+        // =========================================================
 
-    // =========================================================
-    // LIMPIAR
-    // =========================================================
+        @FXML
+        private void eventKey(KeyEvent event) {
 
-    private void limpiar() {
+                if ("\r".equals(event.getCharacter())) {
 
-        txtUserSignIn.clear();
-
-        txtPasswordSignIn.clear();
-
-        txtPasswordSignInMask.clear();
-
-        checkViewPassSignIn.setSelected(false);
-
-
-        txtPasswordSignIn.setVisible(true);
-
-        txtPasswordSignIn.setManaged(true);
-
-
-        txtPasswordSignInMask.setVisible(false);
-
-        txtPasswordSignInMask.setManaged(false);
-    }
-
-
-    // =========================================================
-    // MOSTRAR / OCULTAR PASSWORD
-    // =========================================================
-
-    private void alternarVisibilidadPassword() {
-
-        if (
-                checkViewPassSignIn.isSelected()
-        ) {
-
-            txtPasswordSignInMask.setText(
-                    txtPasswordSignIn.getText()
-            );
-
-
-            txtPasswordSignIn.setVisible(false);
-
-            txtPasswordSignIn.setManaged(false);
-
-
-            txtPasswordSignInMask.setVisible(true);
-
-            txtPasswordSignInMask.setManaged(true);
-
-
-        } else {
-
-            txtPasswordSignIn.setText(
-                    txtPasswordSignInMask.getText()
-            );
-
-
-            txtPasswordSignInMask.setVisible(false);
-
-            txtPasswordSignInMask.setManaged(false);
-
-
-            txtPasswordSignIn.setVisible(true);
-
-            txtPasswordSignIn.setManaged(true);
+                        ingresar();
+                }
         }
-    }
 
+        // =========================================================
+        // INICIAR SESIÓN
+        // =========================================================
 
-    // =========================================================
-    // OBTENER PASSWORD
-    // =========================================================
+        private void ingresar() {
 
-    private String obtenerPassword() {
+                String usuario = txtUserSignIn.getText();
 
-        return checkViewPassSignIn.isSelected()
-                ? txtPasswordSignInMask.getText()
-                : txtPasswordSignIn.getText();
-    }
+                String password = obtenerPassword();
 
+                if (usuario.equals("admin")
+                                && password.equals("1234")) {
 
-    // =========================================================
-    // MOSTRAR ERROR
-    // =========================================================
+                        try {
 
-    private void mostrarError(String mensaje) {
+                                /*
+                                 * Cargar ventana principal.
+                                 */
 
-        Alert alerta =
-                new Alert(
-                        Alert.AlertType.ERROR
-                );
+                                FXMLLoader loader = new FXMLLoader(
+                                                getClass().getResource(
+                                                                "/View/ventanaPrincipal.fxml"));
 
+                                Parent root = loader.load();
 
-        alerta.setTitle(
-                "Error de inicio de sesión"
-        );
+                                /*
+                                 * Obtener el controller de
+                                 * ventanaPrincipal.fxml.
+                                 */
 
+                                VentanaPrincipalController controller = loader.getController();
 
-        alerta.setHeaderText(null);
+                                /*
+                                 * MUY IMPORTANTE:
+                                 *
+                                 * Le entregamos el mismo Banco
+                                 * que fue creado en App.
+                                 */
 
+                                controller.setBanco(banco);
 
-        alerta.setContentText(
-                mensaje
-        );
+                                /*
+                                 * Crear ventana principal.
+                                 */
 
+                                Stage ventanaPrincipal = new Stage();
 
-        alerta.showAndWait();
-    }
+                                ventanaPrincipal.setTitle(
+                                                "DaniBanca");
+
+                                ventanaPrincipal.setScene(
+                                                new Scene(root));
+
+                                ventanaPrincipal.setWidth(
+                                                1200);
+
+                                ventanaPrincipal.setHeight(
+                                                700);
+
+                                ventanaPrincipal.setMinWidth(
+                                                1000);
+
+                                ventanaPrincipal.setMinHeight(
+                                                600);
+
+                                ventanaPrincipal.show();
+
+                                /*
+                                 * Cerrar ventana de Login.
+                                 */
+
+                                Stage ventanaLogin = (Stage) txtUserSignIn
+                                                .getScene()
+                                                .getWindow();
+
+                                ventanaLogin.close();
+
+                        } catch (Exception e) {
+
+                                e.printStackTrace();
+                        }
+
+                } else {
+
+                        mostrarError(
+                                        "Usuario o contraseña incorrectos");
+                }
+        }
+
+        // =========================================================
+        // LIMPIAR
+        // =========================================================
+
+        private void limpiar() {
+
+                txtUserSignIn.clear();
+
+                txtPasswordSignIn.clear();
+
+                txtPasswordSignInMask.clear();
+
+                checkViewPassSignIn.setSelected(false);
+
+                txtPasswordSignIn.setVisible(true);
+
+                txtPasswordSignIn.setManaged(true);
+
+                txtPasswordSignInMask.setVisible(false);
+
+                txtPasswordSignInMask.setManaged(false);
+        }
+
+        // =========================================================
+        // MOSTRAR / OCULTAR PASSWORD
+        // =========================================================
+
+        private void alternarVisibilidadPassword() {
+
+                if (checkViewPassSignIn.isSelected()) {
+
+                        txtPasswordSignInMask.setText(
+                                        txtPasswordSignIn.getText());
+
+                        txtPasswordSignIn.setVisible(false);
+
+                        txtPasswordSignIn.setManaged(false);
+
+                        txtPasswordSignInMask.setVisible(true);
+
+                        txtPasswordSignInMask.setManaged(true);
+
+                } else {
+
+                        txtPasswordSignIn.setText(
+                                        txtPasswordSignInMask.getText());
+
+                        txtPasswordSignInMask.setVisible(false);
+
+                        txtPasswordSignInMask.setManaged(false);
+
+                        txtPasswordSignIn.setVisible(true);
+
+                        txtPasswordSignIn.setManaged(true);
+                }
+        }
+
+        // =========================================================
+        // OBTENER PASSWORD
+        // =========================================================
+
+        private String obtenerPassword() {
+
+                return checkViewPassSignIn.isSelected()
+                                ? txtPasswordSignInMask.getText()
+                                : txtPasswordSignIn.getText();
+        }
+
+        // =========================================================
+        // MOSTRAR ERROR
+        // =========================================================
+
+        private void mostrarError(String mensaje) {
+
+                Alert alerta = new Alert(
+                                Alert.AlertType.ERROR);
+
+                alerta.setTitle(
+                                "Error de inicio de sesión");
+
+                alerta.setHeaderText(null);
+
+                alerta.setContentText(
+                                mensaje);
+
+                alerta.showAndWait();
+        }
 }

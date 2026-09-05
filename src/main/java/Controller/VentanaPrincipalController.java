@@ -14,8 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Controlador de la ventana principal. Centraliza la navegación del menú,
- * conserva el banco compartido y mantiene visible el módulo activo.
+ * Controlador de la ventana de navegación principal.
  */
 public class VentanaPrincipalController {
 
@@ -36,12 +35,18 @@ public class VentanaPrincipalController {
     private Label lblTituloVista;
 
     /** Botones disponibles en el menú lateral. */
-    @FXML private Button btnInicio;
-    @FXML private Button btnClientes;
-    @FXML private Button btnCuentas;
-    @FXML private Button btnTransacciones;
-    @FXML private Button btnUsuarios;
-    @FXML private Button btnCerrarSesion;
+    @FXML
+    private Button btnInicio;
+    @FXML
+    private Button btnClientes;
+    @FXML
+    private Button btnCuentas;
+    @FXML
+    private Button btnTransacciones;
+    @FXML
+    private Button btnUsuarios;
+    @FXML
+    private Button btnCerrarSesion;
 
     /** Banco único inyectado por la clase Main al crear esta ventana. */
     private Banco banco;
@@ -122,23 +127,20 @@ public class VentanaPrincipalController {
         cargarVista("/View/clientes.fxml", ClientesController.class);
     }
 
-    /**
-     * Intenta cargar el módulo de cuentas. La vista aún no existe en el
-     * proyecto actual, por lo que el error se informa mediante Alert.
-     */
+    /** Cuentas administra productos y no ejecuta movimientos financieros. */
     @FXML
     private void mostrarCuentas() {
         activarBoton(btnCuentas);
         lblTituloVista.setText("Cuentas");
-        mostrarErrorVistaPendiente("/View/cuentas.fxml");
+        cargarVista("/View/cuentas.fxml", CuentasController.class);
     }
 
-    /** Intenta cargar el módulo de transacciones cuando esté disponible. */
+    /** Transacciones ejecuta operaciones y conserva su historial de sesión. */
     @FXML
     private void mostrarTransacciones() {
         activarBoton(btnTransacciones);
         lblTituloVista.setText("Transacciones");
-        mostrarErrorVistaPendiente("/View/transacciones.fxml");
+        cargarVista("/View/transacciones.fxml", TransaccionesController.class);
     }
 
     /** Deja preparado el acceso al módulo de usuarios aún no implementado. */

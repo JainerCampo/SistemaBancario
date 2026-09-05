@@ -2,18 +2,16 @@ package Model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import Model.Exceptions.DominioException;
 
 public final class Movimiento {
-    private static final AtomicInteger siguienteId = new AtomicInteger(1);
-    private final int id;
+    private int id;
     private final TipoMovimiento tipoMovimiento;
     private final CanalMovimiento canalMovimiento;
     private final double monto;
-    private final LocalDate fecha;
-    private final LocalTime hora;
+    private LocalDate fecha;
+    private LocalTime hora;
     private final String descripcion;
     private final String cuentaOrigen;
     private final String cuentaDestino;
@@ -24,7 +22,7 @@ public final class Movimiento {
         if (canalMovimiento == null) throw new DominioException("El canal del movimiento es obligatorio.");
         if (!Double.isFinite(monto) || monto <= 0) throw new DominioException("El monto debe ser mayor que cero.");
         if (descripcion == null || descripcion.isBlank()) throw new DominioException("La descripción es obligatoria.");
-        this.id = siguienteId.getAndIncrement();
+        this.id = 0;
         this.tipoMovimiento = tipoMovimiento;
         this.canalMovimiento = canalMovimiento;
         this.monto = monto;
@@ -35,7 +33,23 @@ public final class Movimiento {
         this.cuentaDestino = cuentaDestino;
     }
 
+    private Movimiento(int id, TipoMovimiento tipoMovimiento, CanalMovimiento canalMovimiento, double monto,
+            LocalDate fecha, LocalTime hora, String descripcion, String cuentaOrigen, String cuentaDestino)
+            throws DominioException {
+        this(tipoMovimiento, canalMovimiento, monto, descripcion, cuentaOrigen, cuentaDestino);
+        this.id = id;
+        this.fecha = fecha;
+        this.hora = hora;
+    }
+
     public int getId() { return id; }
+    public void setId(int id) { if (id <= 0) throw new IllegalArgumentException("El ID debe ser positivo."); this.id = id; }
+
+    public static Movimiento desdePersistencia(int id, TipoMovimiento tipo, CanalMovimiento canal, double monto,
+            LocalDate fecha, LocalTime hora, String descripcion, String cuentaOrigen, String cuentaDestino)
+            throws DominioException {
+        return new Movimiento(id, tipo, canal, monto, fecha, hora, descripcion, cuentaOrigen, cuentaDestino);
+    }
     public TipoMovimiento getTipoMovimiento() { return tipoMovimiento; }
     public CanalMovimiento getCanalMovimiento() { return canalMovimiento; }
     public double getMonto() { return monto; }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="Controller.NuevaCuentaController" style="-fx-background-color:#F4F6F8;">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-background-color:#123B5D;">
+            <padding>
+                <Insets bottom="20" left="30" right="30" top="20" />
+            </padding>
+            <Label text="Crear nueva cuenta" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24" />
+                </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+        </HBox>
+    </top>
+    <center>
+        <VBox maxWidth="720" spacing="20" style="-fx-background-color:white;-fx-border-color:#D1D5DB;-fx-border-radius:8;-fx-background-radius:8;">
+            <padding>
+                <Insets bottom="28" left="30" right="30" top="28" />
+            </padding>
+            <Label text="Cliente seleccionado" textFill="#123B5D" style="-fx-font-size:18px;-fx-font-weight:bold;" />
+            <VBox spacing="6">
+                <Label text="Nombre completo" textFill="#6B7280" />
+                <Label fx:id="lblCliente" text="-" style="-fx-font-size:15px;-fx-font-weight:bold;" />
+                <Label fx:id="lblIdentificacion" text="-" textFill="#4B5563" />
+            </VBox>
+            <VBox spacing="10" style="-fx-background-color:#F4F6F8;-fx-border-color:#E5E7EB;-fx-border-radius:8;-fx-background-radius:8;">
+                <padding>
+                    <Insets bottom="16" left="16" right="16" top="16" />
+                </padding>
+                <Label text="Datos de la cuenta" textFill="#123B5D" style="-fx-font-size:18px;-fx-font-weight:bold;" />
+                <Label text="Seleccione el producto que desea abrir" textFill="#6B7280" />
+                <HBox spacing="10">
+                    <ToggleButton fx:id="tbAhorros" text="Ahorros" prefHeight="52" minWidth="150"
+                        style="-fx-background-color:#123B5D;-fx-text-fill:white;-fx-font-weight:bold;" />
+                    <ToggleButton fx:id="tbCorriente" text="Corriente" prefHeight="52" minWidth="150"
+                        style="-fx-background-color:white;-fx-text-fill:#374151;-fx-border-color:#CBD5E1;" />
+                </HBox>
+                <Label fx:id="lblTipoDescripcion" text="Cuenta para ahorrar y generar rendimientos según la tasa configurada."
+                    wrapText="true" textFill="#374151" />
+            </VBox>
+            <VBox spacing="6">
+                <Label fx:id="lblParametroTitulo" text="Tasa de interés (%)" textFill="#374151"
+                    style="-fx-font-weight:bold;" />
+                <TextField fx:id="txtParametro" prefHeight="44" promptText="Ej: 2.50" />
+                <Label fx:id="lblParametroAyuda" text="Porcentaje de interés que usará la cuenta de ahorros."
+                    wrapText="true" textFill="#6B7280" />
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Button fx:id="btnCancelar" text="Cancelar" onAction="#cancelar" prefHeight="44" minWidth="110" />
+                <Button fx:id="btnCrear" text="Crear cuenta" onAction="#crearCuenta" prefHeight="44" minWidth="140" style="-fx-background-color:#123B5D;-fx-text-fill:white;-fx-font-weight:bold;" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

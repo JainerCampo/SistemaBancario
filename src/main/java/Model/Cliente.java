@@ -1,12 +1,12 @@
 package Model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import Model.Exceptions.CuentaDuplicadaException;
+import java.util.List;
+import Database.DAO.CuentaDAO;
 import Model.Exceptions.DominioException;
 
 public class Cliente extends Persona {
-    private final ArrayList<Cuenta> cuentas = new ArrayList<>();
+    private CuentaDAO cuentaDAO;
 
     public Cliente(TipoIdentificacion tipoIdentificacion, String documento, String nombres,
             String apellidos, LocalDate fechaNacimiento, Direccion direccion,
@@ -14,30 +14,17 @@ public class Cliente extends Persona {
         super(tipoIdentificacion, documento, nombres, apellidos, fechaNacimiento, direccion, telefono, correo);
     }
 
-    protected void agregarCuentaCliente(Cuenta cuenta) throws DominioException {
-        if (cuenta == null)
-            throw new DominioException("La cuenta no puede ser nula.");
-        if (cuenta.getTitular() != this)
-            throw new DominioException("La cuenta no pertenece a este cliente.");
-        if (buscarCuentaCliente(cuenta.getNumeroCuenta()) != null)
-            throw new CuentaDuplicadaException("La cuenta ya está registrada para este cliente.");
-        cuentas.add(cuenta);
+    public void asignarCuentaDAO(CuentaDAO cuentaDAO) {
+        this.cuentaDAO = cuentaDAO;
     }
 
-    public Cuenta buscarCuentaCliente(String numeroCuenta) throws DominioException {
-        if (numeroCuenta == null || numeroCuenta.isBlank())
-            throw new DominioException("El número de cuenta no puede ser nulo o vacío.");
-        for (Cuenta cuenta : cuentas)
-            if (cuenta.getNumeroCuenta().equals(numeroCuenta.trim()))
-                return cuenta;
-        return null;
-    }
-
-    public int cantidadCuentas() {
-        return cuentas.size();
-    }
-
-    public ArrayList<Cuenta> getCuentas() {
-        return new ArrayList<>(cuentas);
+    public List<Cuenta> getCuentas() {
+        if (cuentaDAO == null || getId() <= 0)
+            return List.of();
+        try {
+            return cuentaDAO.buscarPorCliente(getId());
+        } catch (DominioException e) {
+            return List.of();
+        }
     }
 }
